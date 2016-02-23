@@ -125,4 +125,17 @@ class TestGameOfLife < Test::Unit::TestCase
     assert_equal(new_state, life.state)
   end
 
+  def test_cells_can_exist_in_negative_space
+    life.update({
+      1 => [0],
+      2 => [0],
+      3 => [0]
+      })
+    life.generate
+    new_state = {
+      2 => [-1, 0, 1]
+    }
+    assert_equal(new_state, life.state)
+  end
+
 end
