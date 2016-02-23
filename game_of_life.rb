@@ -1,3 +1,38 @@
+# XXX: OVERVIEW
+# In this solution, state is stored in a hash where each hash key is an integer
+# and represents each row in the 2D grid. Each "row" (hash[key]) is an array of
+# integers. Each integer in the "row" array, represents a cell's location.
+# The cells that exist in a given row are implicitly alive.
+# Non-existent cells are implicitly dead. Dead cells have no bearing on the
+# fate of neighboring cells and therefore are not tracked.
+
+# XXX: EXAMPLE STATE
+# {
+#   1 => [1, 2,    4],
+#   2 => [   2      ],
+#   3 => [1, 2, 3, 4]
+# }
+
+# XXX: PROJECTIONS
+# subsequent states are calculated by projecting scores for the possible cells
+# that surround only the living (existing) cells.
+
+# XXX: EXAMPLE PROJECTION
+# {
+#   # row
+#   1 => {
+#     # cells and their respective scores
+#     1 => 4,
+#     3 => 5
+#   },
+#
+#   # row
+#   2 => {
+#     1 => 2,
+#     3 => 4
+#   }
+# }
+
 class GameOfLife
 
   attr_reader :state
