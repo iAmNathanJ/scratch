@@ -72,6 +72,8 @@ class GameOfLife
           if cell_score < 2 || cell_score > 3
             # Kill
             new_state[row_num].delete(cell)
+            # Remove dead rows
+            new_state.delete(row_num) if new_state[row_num].empty?
           end
         else
           # This cell is dead
