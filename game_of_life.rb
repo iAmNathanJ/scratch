@@ -1,0 +1,104 @@
+class GameOfLife
+
+  attr_reader :state
+
+  def initialize
+    @state = {}
+  end
+
+  def seed(size = 10)
+    for i in (1..size) do
+      @state[i] = random_row(size)
+    end
+  end
+
+  def update(new_state)
+    @state = new_state
+  end
+
+  def increment(projection, y, x)
+    projection[y] ||= {}
+    projection[y][x] ||= 0
+    projection[y][x] += 1
+  end
+
+  def project_row(row_num, row_cells)
+    projection = {}
+    row_cells.each do |cell|
+      # left & right
+      increment(projection, row_num, cell+1)
+      increment(projection, row_num, cell-1)
+      # top
+      increment(projection, row_num-1, cell-1)
+      increment(projection, row_num-1, cell)
+      increment(projection, row_num-1, cell+1)
+      # bottom
+      increment(projection, row_num+1, cell-1)
+      increment(projection, row_num+1, cell)
+      increment(projection, row_num+1, cell+1)
+    end
+    projection
+  end
+
+  def merge_projections(projection_1, projection_2)
+    projection_1.each_key do |row|
+      new_row = {}
+      if projection_2[row]
+        new_row = projection_1[row].merge(projection_2[row]) do |cell, val_1, val_2|
+          val_1 + val_2
+        end
+        projection_1[row] = new_row
+      end
+    end
+    projection_2.merge(projection_1)
+  end
+
+  def project_all
+    fate = {}
+    @state.each_key do |row_num|
+      row_projection = project_row(row_num, @state[row_num])
+      fate = merge_projections(row_projection, fate)
+    end
+    fate
+  end
+
+  def state_from_projection(projection)
+    new_state = @state
+    projection.each_key do |row_num|
+      projection[row_num].each_key do |cell|
+        cell_score = projection[row_num][cell]
+        if new_state[row_num] && new_state[row_num].include?(cell)
+          # This cell is alive
+          if cell_score < 2 || cell_score > 3
+            # Kill
+            new_state[row_num].delete(cell)
+          end
+        else
+          # This cell is dead
+          if cell_score === 3
+            # Bring to life
+            new_state[row_num] ||= []
+            new_state[row_num] << cell
+            new_state[row_num].sort!
+            new_state[row_num].uniq!
+          end
+        end
+      end
+    end
+    new_state
+  end
+
+  def generate
+    @state = state_from_projection(project_all)
+  end
+
+  private
+  def random_row(max_size)
+    row = []
+    for i in (0..max_size)
+      row << i if rand < 0.3
+    end
+    row
+  end
+
+end
