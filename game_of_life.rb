@@ -47,7 +47,7 @@ class GameOfLife
     end
   end
 
-  def update(new_state)
+  def set_state(new_state)
     @state = new_state
   end
 

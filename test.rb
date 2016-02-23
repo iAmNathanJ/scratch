@@ -72,7 +72,7 @@ class TestGameOfLife < Test::Unit::TestCase
   end
 
   def test_mutiple_rows_can_project
-    life.update({
+    life.set_state({
       0 => [0],
       1 => [0]
       })
@@ -86,7 +86,7 @@ class TestGameOfLife < Test::Unit::TestCase
   end
 
   def test_state_can_be_generated_from_projection
-    life.update({
+    life.set_state({
       0 => [1],
       1 => [0, 1]
       })
@@ -100,7 +100,7 @@ class TestGameOfLife < Test::Unit::TestCase
   end
 
   def test_life_can_generate
-    life.update({
+    life.set_state({
       1 => [1],
       2 => [1, 2]
     })
@@ -113,7 +113,7 @@ class TestGameOfLife < Test::Unit::TestCase
   end
 
   def test_cells_can_die
-    life.update({
+    life.set_state({
       2 => [1, 2, 3]
       })
     life.generate
@@ -126,7 +126,7 @@ class TestGameOfLife < Test::Unit::TestCase
   end
 
   def test_cells_can_exist_in_negative_space
-    life.update({
+    life.set_state({
       1 => [0],
       2 => [0],
       3 => [0]
