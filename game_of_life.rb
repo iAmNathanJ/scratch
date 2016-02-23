@@ -97,32 +97,30 @@ class GameOfLife
     fate
   end
 
+  def update_cell(st, row, cell, score)
+    if st[row] && st[row].include?(cell)
+      if score < 2 || score > 3 # This cell is alive
+        st[row].delete(cell) # Kill
+        st.delete(row) if st[row].empty? # Remove dead rows
+      end
+    elsif score === 3 # This cell is dead
+      st[row] ||= [] # Bring to life
+      st[row] << cell
+      st[row].sort!
+      st[row].uniq!
+    end
+    st
+  end
+
   def state_from_projection(projection)
-    new_state = @state
+    current_state = @state
     projection.each_key do |row_num|
       projection[row_num].each_key do |cell|
         cell_score = projection[row_num][cell]
-        if new_state[row_num] && new_state[row_num].include?(cell)
-          # This cell is alive
-          if cell_score < 2 || cell_score > 3
-            # Kill
-            new_state[row_num].delete(cell)
-            # Remove dead rows
-            new_state.delete(row_num) if new_state[row_num].empty?
-          end
-        else
-          # This cell is dead
-          if cell_score === 3
-            # Bring to life
-            new_state[row_num] ||= []
-            new_state[row_num] << cell
-            new_state[row_num].sort!
-            new_state[row_num].uniq!
-          end
-        end
+        current_state = update_cell(current_state, row_num, cell, cell_score)
       end
     end
-    new_state
+    current_state
   end
 
   def generate
