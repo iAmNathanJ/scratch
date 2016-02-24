@@ -92,27 +92,26 @@ class GameOfLife
     projection_2.merge(projection_1)
   end
 
-  def update_cell(st, row, cell, score)
-    if st[row] && st[row].include?(cell) # This cell is alive
+  def update_cell(grid, y, x, score)
+    if grid[y] && grid[y].include?(x) # This cell is alive
       if score < 2 || score > 3
-        st[row].delete(cell) # Kill
-        st.delete(row) if st[row].empty? # Remove dead rows
+        grid[y].delete(x) # Kill
+        grid.delete(y) if grid[y].empty? # Remove dead rows
       end
     elsif score === 3 # This cell is dead
-      st[row] ||= [] # Bring to life
-      st[row] << cell
-      st[row].sort!
-      st[row].uniq!
+      grid[y] ||= [] # Bring to life
+      grid[y] << x
+      grid[y].sort!
+      grid[y].uniq!
     end
-    st
+    grid
   end
 
   def parse_state(projection)
     current_state = @state
-    projection.each_key do |row_num|
-      projection[row_num].each_key do |cell|
-        cell_score = projection[row_num][cell]
-        current_state = update_cell(current_state, row_num, cell, cell_score)
+    projection.map do |y_coord, row|
+      row.map do |x_coord, score|
+        update_cell(current_state, y_coord, x_coord, score)
       end
     end
     current_state
