@@ -61,17 +61,11 @@ class GameOfLife
   def project_row(row_num, row_cells)
     projection = {}
     row_cells.each do |cell|
-      # left & right
-      increment(projection, row_num, cell+1)
-      increment(projection, row_num, cell-1)
-      # top
-      increment(projection, row_num-1, cell-1)
-      increment(projection, row_num-1, cell)
-      increment(projection, row_num-1, cell+1)
-      # bottom
-      increment(projection, row_num+1, cell-1)
-      increment(projection, row_num+1, cell)
-      increment(projection, row_num+1, cell+1)
+      for i in (-1..1) do
+        for j in (-1..1) do
+          increment(projection, row_num+i, cell+j) unless (i == 0 && j == 0)
+        end
+      end
     end
     projection
   end
