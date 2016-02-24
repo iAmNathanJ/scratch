@@ -75,6 +75,15 @@ class GameOfLife
     projection
   end
 
+  def project_all
+    fate = {}
+    @state.each_key do |row_num|
+      row_projection = project_row(row_num, @state[row_num])
+      fate = merge_projections(row_projection, fate)
+    end
+    fate
+  end
+
   def merge_projections(projection_1, projection_2)
     projection_1.each_key do |row|
       new_row = {}
@@ -86,15 +95,6 @@ class GameOfLife
       end
     end
     projection_2.merge(projection_1)
-  end
-
-  def project_all
-    fate = {}
-    @state.each_key do |row_num|
-      row_projection = project_row(row_num, @state[row_num])
-      fate = merge_projections(row_projection, fate)
-    end
-    fate
   end
 
   def update_cell(st, row, cell, score)
@@ -112,7 +112,7 @@ class GameOfLife
     st
   end
 
-  def state_from_projection(projection)
+  def parse_state(projection)
     current_state = @state
     projection.each_key do |row_num|
       projection[row_num].each_key do |cell|
@@ -124,7 +124,7 @@ class GameOfLife
   end
 
   def generate
-    @state = state_from_projection(project_all)
+    @state = parse_state(project_all)
   end
 
   private

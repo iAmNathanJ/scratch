@@ -91,7 +91,7 @@ class TestGameOfLife < Test::Unit::TestCase
       1 => [0, 1]
       })
     projection = life.project_all
-    new_state = life.state_from_projection(projection)
+    new_state = life.parse_state(projection)
     mock_state = {
       0 => [0, 1],
       1 => [0, 1]
