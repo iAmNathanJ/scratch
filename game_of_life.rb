@@ -33,6 +33,7 @@
 #   }
 # }
 
+
 class GameOfLife
 
   attr_reader :state
