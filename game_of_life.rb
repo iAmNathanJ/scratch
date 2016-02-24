@@ -98,8 +98,8 @@ class GameOfLife
   end
 
   def update_cell(st, row, cell, score)
-    if st[row] && st[row].include?(cell)
-      if score < 2 || score > 3 # This cell is alive
+    if st[row] && st[row].include?(cell) # This cell is alive
+      if score < 2 || score > 3
         st[row].delete(cell) # Kill
         st.delete(row) if st[row].empty? # Remove dead rows
       end
