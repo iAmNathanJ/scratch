@@ -23,9 +23,7 @@ class GameOfLife
   def living?(coords)
     for i in (0..state.length)
       return true if state[i].coords == coords
-      break
     end
-    false
   end
 
   def generate
