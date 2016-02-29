@@ -1,36 +1,56 @@
 require_relative 'cell'
-require_relative 'next_gen'
 
 class GameOfLife
 
-  attr_reader :state, :next_generation
+  attr_reader :state
 
   def initialize(initial_state)
     @state = []
-    @next_generation = Generation.new
-    initial_state.each { |coords| @state << Cell.new(coords[:x], coords[:y]) }
+    @future = []
+    initial_state.each { |coords| @state << Cell.new(coords) }
+    build_future
   end
 
-  def build_next_gen
+  def build_future
+    @future.clear
     state.each do |cell|
-      cell.influence.each do |coords|
-        status = living?(coords)
-        next_generation.add(coords, status)
+      cell.influence.each do |neighbor|
+        @future << neighbor
       end
     end
   end
 
-  def living?(coords)
-    for i in (0..state.length)
-      return true if state[i].coords == coords
+  def state_coords
+    @state.map do |cell|
+      cell.coords
     end
   end
 
-  def generate
-    build_next_gen
-    state = next_generation.output.map do |cell|
-      Cell.new(cell.coords)
-    end
-    next_generation.reset
+  def living?(coords)
+    state_coords.include?(coords)
   end
+
+  def neighbors(coords)
+    @future.count(coords)
+  end
+
+  def survivor?(coords)
+    neighbor_count = neighbors(coords)
+    living?(coords) && neighbor_count > 1 && neighbor_count < 4
+  end
+
+  def new_life?(coords)
+    neighbor_count = neighbors(coords)
+    !living?(coords) && neighbor_count == 3
+  end
+
+  def generate
+    build_future
+    next_gen = @future.select { |coords| survivor?(coords) }.uniq
+    next_gen += @future.select { |coords| new_life?(coords) }.uniq
+    @state = next_gen.map do |coords|
+      Cell.new(coords)
+    end
+  end
+
 end
