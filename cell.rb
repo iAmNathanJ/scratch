@@ -12,16 +12,13 @@ class Cell
     }
   end
 
-  def influence
-    [
-      coords(-1, -1),
-      coords( 0, -1),
-      coords( 1, -1),
-      coords(-1,  0),
-      coords( 1,  0),
-      coords(-1,  1),
-      coords( 0,  1),
-      coords( 1,  1)
-    ]
+  def influence(reach = 1)
+    possible_cells = []
+    for i in (-reach..reach)
+      for j in (-reach..reach)
+        possible_cells << coords(i, j) unless (i == 0 && j == 0)
+      end
+    end
+    possible_cells
   end
 end
