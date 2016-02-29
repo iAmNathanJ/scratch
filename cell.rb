@@ -1,8 +1,8 @@
 class Cell
 
-  def initialize(x, y)
-    @x = x
-    @y = y
+  def initialize(coords)
+    @x = coords[:x]
+    @y = coords[:y]
   end
 
   def coords(offest_x = 0, offset_y = 0)
