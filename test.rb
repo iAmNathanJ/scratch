@@ -16,7 +16,6 @@ class TestGameOfLife < Test::Unit::TestCase
 
   def test_live_cell_continues_when_it_has_2_neighbors
     cell = life.state[0]
-    life.generate
     # assert( life.continue?(cell) )
   end
 
