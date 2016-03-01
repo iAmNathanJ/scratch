@@ -53,4 +53,21 @@ class GameOfLife
     end
   end
 
+  def run
+    begin
+      generate
+      sleep 0.5
+    end while @future.length > 0
+    yield(the_end)
+  end
+
+  private
+  def the_end
+    message = []
+    File.open("./the_end.txt", "r") do |f|
+      f.each_line { |line| message << line }
+    end
+    message
+  end
+
 end
