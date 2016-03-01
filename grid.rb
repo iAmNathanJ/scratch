@@ -3,10 +3,10 @@ class Grid
   DEFAULT_SIZE = 20
 
   def initialize(params = {})
-    @width = params.fetch(:width, DEFAULT_SIZE)
+    @width  = params.fetch(:width, DEFAULT_SIZE)
     @height = params.fetch(:height, @width)
     @format = params.fetch(:format, nil)
-    @top = 0
+    @top  = 0
     @left = 0
     @grid = []
     @height.times { @grid << Array.new(@width) }
@@ -30,7 +30,7 @@ class Grid
       y = datum[:y]
       @grid[y][x] = @format.call(datum)
     end
-    @render.call(@grid)
+    @grid
   end
 
 end
@@ -41,6 +41,6 @@ grid = Grid.new({
   end
 })
 
-grid.render([
+p grid.render([
   { x: 1, y: 1 }
 ])
