@@ -36,11 +36,13 @@ class GameOfLife
 
   def survivor?(coords)
     neighbor_count = neighbors(coords)
+    # update rules for 3 dimensions
     living?(coords) && neighbor_count > 1 && neighbor_count < 4
   end
 
   def new_life?(coords)
     neighbor_count = neighbors(coords)
+    # update rules for 3 dimensions
     !living?(coords) && neighbor_count == 3
   end
 
