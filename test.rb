@@ -55,21 +55,31 @@ class TestGameOfLife < Test::Unit::TestCase
 
   def test_life_can_generate
     life = GameOfLife.new([
-      { x: 0, y: 0 },
       { x: 1, y: 0 },
-      { x: 0, y: 1 }
+      { x: 1, y: 1 },
+      { x: 1, y: 2 }
     ])
 
     next_gen = [
-      { x: 0, y: 0 },
-      { x: 1, y: 0 },
       { x: 0, y: 1 },
-      { x: 1, y: 1 }
+      { x: 1, y: 1 },
+      { x: 2, y: 1 }
+    ]
+
+    next_gen2 = [
+      { x: 1, y: 0 },
+      { x: 1, y: 1 },
+      { x: 1, y: 2 }
     ]
 
     life.generate
     life.state.each do |cell|
       assert(next_gen.include?(cell.coords))
+    end
+
+    life.generate
+    life.state.each do |cell|
+      assert(next_gen2.include?(cell.coords))
     end
   end
 
