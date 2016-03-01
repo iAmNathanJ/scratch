@@ -83,4 +83,13 @@ class TestGameOfLife < Test::Unit::TestCase
     end
   end
 
+  def test_no_life
+    life = GameOfLife.new([{ x: 1, y: 1 }])
+    life.generate
+    assert_equal([], life.state)
+    life.run do |msg|
+      msg.each { |line| puts line }
+    end
+  end
+
 end
