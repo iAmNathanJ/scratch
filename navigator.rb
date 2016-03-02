@@ -26,18 +26,19 @@ module Navigator
     total
   end
 
-  def influence(location, proximity = 1)
-    possible_cells = []
+  def influence(location, locations, proximity = 1)
+    possible_locations = []
     for x in (-proximity..proximity)
       for y in (-proximity..proximity)
         if(x == 0 && y == 0)
           next
         else
-          possible_cells << offset(location, x, y)
+          possible_location = offset(location, x, y)
+          possible_locations << possible_location if !living?(possible_location, locations)
         end
       end
     end
-    possible_cells
+    possible_locations
   end
 
 end
