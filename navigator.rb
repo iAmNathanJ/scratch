@@ -1,7 +1,5 @@
 module Navigator
 
-  include Rules
-
   def living?(location, locations)
     locations.include?(location)
   end
@@ -26,6 +24,20 @@ module Navigator
       end
     end
     total
+  end
+
+  def influence(location, proximity = 1)
+    possible_cells = []
+    for x in (-proximity..proximity)
+      for y in (-proximity..proximity)
+        if(x == 0 && y == 0)
+          next
+        else
+          possible_cells << offset(location, x, y)
+        end
+      end
+    end
+    possible_cells
   end
 
 end
