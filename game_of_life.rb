@@ -9,7 +9,7 @@ class GameOfLife
     locations
       .select { |l| @rules.survivors(@navigate.neighbors(l, locations)) }
       .concat(locations
-        .reduce([]) { |acc, l| (acc + @navigate.influence(l, locations)).uniq }
+        .reduce([]) { |acc, l| (acc + @navigate.influence(l, locations)) }
         .select { |l| @rules.new_life(@navigate.neighbors(l, locations)) })
   end
 
