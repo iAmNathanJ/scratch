@@ -6,11 +6,11 @@ class GameOfLife
   end
 
   def generate(locations)
-    locations
-      .select { |l| @rules.survivors(@navigate.neighbors(l, locations)) }
-      .concat(locations
-        .reduce([]) { |acc, l| (acc + @navigate.influence(l, locations)) }
-        .select { |l| @rules.new_life(@navigate.neighbors(l, locations)) })
+    survivors = locations.select { |location| @rules.survivors(@navigate.neighbors(location, locations)) }
+    new_life = locations
+      .reduce([]) { |new_locations, location| new_locations + @navigate.influence(location, locations) }
+      .select { |location| @rules.new_life(@navigate.neighbors(location, locations)) }
+    survivors + new_life
   end
 
 end
