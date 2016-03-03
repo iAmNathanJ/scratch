@@ -1,12 +1,16 @@
 require 'test/unit'
 require_relative 'game_of_life'
+require_relative 'navigator'
+require_relative 'rules'
 
 class TestGameOfLife < Test::Unit::TestCase
 
   attr_reader :life
 
   def setup
-    @life = GameOfLife.new
+    nav = XY_Navigator.new
+    rules = Rules.new
+    @life = GameOfLife.new(nav, rules)
   end
 
   def test_generation
@@ -37,7 +41,7 @@ class TestGameOfLife < Test::Unit::TestCase
       { x: 1, y: 0 },
       { x: 1, y: 1 }
     ]
-    expected.each { |coords| assert(result.include?(coords)) } 
+    expected.each { |coords| assert(result.include?(coords)) }
   end
 
 end
