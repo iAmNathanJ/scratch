@@ -1,17 +1,16 @@
-require_relative './navigator'
-require_relative './rules'
-
 class GameOfLife
 
-  include Navigator
-  include Rules
+  def initialize(nav, rules)
+    @navigate = nav
+    @rules = rules
+  end
 
   def generate(locations)
     locations
-      .select { |l| survivors(neighbors(l, locations)) }
+      .select { |l| @rules.survivors(@navigate.neighbors(l, locations)) }
       .concat(locations
-        .reduce([]) { |acc, l| (acc + influence(l, locations)).uniq }
-        .select { |l| new_life(neighbors(l, locations)) })
+        .reduce([]) { |acc, l| (acc + @navigate.influence(l, locations)).uniq }
+        .select { |l| @rules.new_life(@navigate.neighbors(l, locations)) })
   end
 
 end
