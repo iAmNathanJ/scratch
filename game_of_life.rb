@@ -7,19 +7,11 @@ class GameOfLife
   include Rules
 
   def generate(locations)
-
+    locations
+      .select { |l| survivors(neighbors(l, locations)) }
+      .concat(locations
+        .reduce([]) { |acc, l| (acc + influence(l, locations)).uniq }
+        .select { |l| new_life(neighbors(l, locations)) })
   end
 
 end
-
-# life = GameOfLife.new()
-#
-# state = [
-#   {x: 0, y: 0},
-#   {x: 1, y: 0},
-#   {x: 2, y: 0},
-#   {x: 0, y: 1},
-#   {x: 1, y: 1},
-# ]
-#
-# p life.generate(state)
