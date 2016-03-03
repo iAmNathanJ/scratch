@@ -1,4 +1,8 @@
+require "observer"
+
 class GameOfLife
+
+  include Observable
 
   def initialize(nav, rules)
     @navigate = nav
@@ -13,13 +17,15 @@ class GameOfLife
 
     affected = locations.reduce([]) do |new_locations, location|
       new_locations + @navigate.influence(location, locations)
-    end
+    end.uniq
 
     new_life = affected.select do |location|
       neighbors = @navigate.neighbors(location, locations)
       @rule.new_life(neighbors)
     end
 
+    changed
+    notify_observers(survivors + new_life)
     survivors + new_life
   end
 
