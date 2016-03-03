@@ -1,11 +1,11 @@
 module Rules
 
-  def survivors(alive, neighbors)
-    alive && neighbors.between?(3, 4)
+  def survivors(neighbors)
+    neighbors.between?(2, 3)
   end
 
-  def new_life(alive, neighbors)
-    !alive && neighbors == 3
+  def new_life(neighbors)
+    neighbors == 3
   end
 
 end
