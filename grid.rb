@@ -1,4 +1,4 @@
-class Grid
+class XY_Grid
 
   DEFAULT_SIZE = 20
 
@@ -6,8 +6,7 @@ class Grid
     @width  = params.fetch(:width, DEFAULT_SIZE)
     @height = params.fetch(:height, @width)
     @format = params.fetch(:format, nil)
-    @top  = 0
-    @left = 0
+    @top = @left = 0
     @grid = []
     @height.times { @grid << Array.new(@width) }
     format_grid
@@ -24,23 +23,29 @@ class Grid
     end
   end
 
-  def render(data)
-    data.each do |datum|
-      x = datum[:x]
-      y = datum[:y]
-      @grid[y][x] = @format.call(datum)
+  def clear_grid
+    @grid = @grid.map do |row|
+      row.map { |location| '.' }
     end
-    @grid
+  end
+
+  def update(locations)
+    clear_grid
+    locations.each do |point|
+      x = point[:x]
+      y = point[:y]
+      @grid[y][x] = @format.call(point)
+    end
+  end
+
+  def print_grid
+    @grid.each { |row| p row }
   end
 
 end
 
-grid = Grid.new({
-  format: -> data do
-    output = data ? "*" : "."
-  end
-})
-
-p grid.render([
-  { x: 1, y: 1 }
-])
+# grid = Grid.new({
+#   format: -> point do
+#     output = point ? "*" : "."
+#   end
+# })
