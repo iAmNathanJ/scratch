@@ -33,8 +33,7 @@ module Navigator
         if x == 0 && y == 0
           next
         else
-          possible_location = offset(location, x, y)
-          possible_locations << possible_location
+          possible_locations << offset(location, x, y)
         end
       end
     end
