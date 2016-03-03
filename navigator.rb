@@ -11,34 +11,34 @@ class XY_Navigator
     }
   end
 
-  def neighbors(location, locations, proximity = 1)
-    total = 0
+  def navigate(location, locations, proximity = 1)
     for x in (-proximity..proximity)
       for y in (-proximity..proximity)
-        if x == 0 && y == 0
-          next
-        else
-          neighbor = offset(location, x, y)
-          total += 1 if living?(neighbor, locations)
-        end
+        yield(x, y, location, locations)
+      end
+    end
+  end
+
+  def neighbors(location, locations)
+    total = 0
+    navigate(location, locations) do |x, y, loc, locs|
+      if x == 0 && y == 0
+        next
+      else
+        neighbor = offset(loc, x, y)
+        total += 1 if living?(neighbor, locations)
       end
     end
     total
   end
 
-  def influence(location, locations, proximity = 1)
+  def influence(location, locations)
     possible_locations = []
-    for x in (-proximity..proximity)
-      for y in (-proximity..proximity)
-        if x == 0 && y == 0
-          next
-        else
-          neighbor = offset(location, x, y)
-          already_living = living?(neighbor, locations)
-          already_listed = possible_locations.include?(neighbor)
-          possible_locations << neighbor if !already_living && !already_listed
-        end
-      end
+    navigate(location, locations) do |x, y, loc, locs|
+      neighbor = offset(loc, x, y)
+      already_living = living?(neighbor, locs)
+      already_listed = possible_locations.include?(neighbor)
+      possible_locations << neighbor if !already_living && !already_listed
     end
     possible_locations
   end
