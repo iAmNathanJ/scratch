@@ -22,6 +22,8 @@ class TestGameOfLife < Test::Unit::TestCase
   def test_navigator_counts_existing_neighbors_of_location
     result = life.neighbors({ x: 0, y: 0 }, locations)
     assert_equal(2, result)
+    result = life.neighbors({ x: -1, y: 0 }, locations)
+    assert_equal(2, result)
   end
 
   def test_navigator_informs_of_location_influence
@@ -31,7 +33,9 @@ class TestGameOfLife < Test::Unit::TestCase
       { x: -1, y:  0 },
       { x: -1, y:  1 },
       { x:  0, y: -1 },
+      { x:  0, y:  1 },
       { x:  1, y: -1 },
+      { x:  1, y:  0 },
       { x:  1, y:  1 }
     ]
     assert_equal(expected, result)
