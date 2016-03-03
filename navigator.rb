@@ -34,7 +34,9 @@ class XY_Navigator
           next
         else
           neighbor = offset(location, x, y)
-          possible_locations << neighbor if !living?(neighbor, locations)
+          already_living = living?(neighbor, locations)
+          already_listed = possible_locations.include?(neighbor)
+          possible_locations << neighbor if !already_living && !already_listed
         end
       end
     end
