@@ -30,7 +30,7 @@ module Navigator
     possible_locations = []
     for x in (-proximity..proximity)
       for y in (-proximity..proximity)
-        if(x == 0 && y == 0)
+        if x == 0 && y == 0
           next
         else
           possible_location = offset(location, x, y)
