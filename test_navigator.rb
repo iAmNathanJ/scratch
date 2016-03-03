@@ -7,7 +7,7 @@ class TestGameOfLife < Test::Unit::TestCase
 
   def setup
     @locations = [
-      { x: 0, y: 0 }, # <- 2 neighbors, will remain
+      { x: 0, y: 0 },
       { x: 1, y: 0 },
       { x: 0, y: 1 }
     ]
