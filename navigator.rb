@@ -7,7 +7,7 @@ module Navigator
   def offset(location, offset_x = 0, offset_y = 0)
     {
       x: location[:x] + offset_x,
-      y: location[:x] + offset_y
+      y: location[:y] + offset_y
     }
   end
 
@@ -15,7 +15,7 @@ module Navigator
     total = 0
     for x in (-proximity..proximity)
       for y in (-proximity..proximity)
-        if(x == 0 && y == 0)
+        if x == 0 && y == 0
           next
         else
           neighbor = offset(location, x, y)
@@ -34,7 +34,7 @@ module Navigator
           next
         else
           possible_location = offset(location, x, y)
-          possible_locations << possible_location if !living?(possible_location, locations)
+          possible_locations << possible_location
         end
       end
     end
