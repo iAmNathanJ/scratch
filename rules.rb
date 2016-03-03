@@ -1,4 +1,4 @@
-module Rules
+class Rules
 
   def survivors(neighbors)
     neighbors.between?(2, 3)
