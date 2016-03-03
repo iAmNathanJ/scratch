@@ -1,4 +1,4 @@
-module Navigator
+class XY_Navigator
 
   def living?(location, locations)
     locations.include?(location)
@@ -33,7 +33,8 @@ module Navigator
         if x == 0 && y == 0
           next
         else
-          possible_locations << offset(location, x, y)
+          neighbor = offset(location, x, y)
+          possible_locations << neighbor if !living?(neighbor, locations)
         end
       end
     end
