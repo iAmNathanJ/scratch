@@ -7,9 +7,9 @@ class GameOfLifeDriver
 
   def initialize
 
-    nav = XY_Surveyor.new
+    surveyor = XY_Surveyor.new
     rules = Rules.new
-    @game_instance = GameOfLife.new(nav, rules)
+    @game_instance = GameOfLife.new(surveyor, rules)
 
     @input = [
       { x: 0, y: 0 },
