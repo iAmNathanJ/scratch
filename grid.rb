@@ -43,9 +43,3 @@ class XY_Grid
   end
 
 end
-
-# grid = Grid.new({
-#   format: -> point do
-#     output = point ? "*" : "."
-#   end
-# })
