@@ -23,14 +23,14 @@ class XY_Grid
     end
   end
 
-  def clear_grid
+  def clear_grid(set_to)
     @grid = @grid.map do |row|
-      row.map { |location| '.' }
+      row.map { |location| set_to }
     end
   end
 
   def update(locations)
-    clear_grid
+    clear_grid('.')
     locations.each do |point|
       x = point[:x]
       y = point[:y]
