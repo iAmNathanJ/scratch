@@ -1,5 +1,5 @@
 require_relative 'game_of_life'
-require_relative 'navigator'
+require_relative 'surveyor'
 require_relative 'rules'
 require_relative 'grid'
 
@@ -7,7 +7,7 @@ class GameOfLifeDriver
 
   def initialize
 
-    nav = XY_Navigator.new
+    nav = XY_Surveyor.new
     rules = Rules.new
     @game_instance = GameOfLife.new(nav, rules)
 
@@ -19,8 +19,7 @@ class GameOfLifeDriver
       { x: 2, y: 2 },
       { x: 3, y: 2 },
       { x: 3, y: 3 },
-      { x: 4, y: 3 },
-
+      { x: 4, y: 3 }
     ]
 
     @output = XY_Grid.new({
