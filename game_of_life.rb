@@ -4,23 +4,23 @@ class GameOfLife
 
   include Observable
 
-  def initialize(nav, rules)
-    @navigate = nav
+  def initialize(surveyor, rules)
+    @survey = surveyor
     @rule = rules
   end
 
   def generate(locations)
     survivors = locations.select do |location|
-      neighbors = @navigate.neighbors(location, locations)
+      neighbors = @survey.neighbors(location, locations)
       @rule.survivors(neighbors)
     end
 
     affected = locations.reduce([]) do |new_locations, location|
-      new_locations + @navigate.influence(location, locations)
+      new_locations + @survey.influence(location, locations)
     end.uniq
 
     new_life = affected.select do |location|
-      neighbors = @navigate.neighbors(location, locations)
+      neighbors = @survey.neighbors(location, locations)
       @rule.new_life(neighbors)
     end
 

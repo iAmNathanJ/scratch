@@ -7,11 +7,11 @@ class GameOfLifeDriver
 
   def initialize
 
-    nav = XY_Surveyor.new
+    surveyor = XY_Surveyor.new
     rules = Rules.new
-    @game_instance = GameOfLife.new(nav, rules)
+    @game_instance = GameOfLife.new(surveyor, rules)
 
-    @input = [
+    @state = [
       { x: 0, y: 0 },
       { x: 1, y: 0 },
       { x: 2, y: 0 },
@@ -41,7 +41,7 @@ class GameOfLifeDriver
       go = gets.chomp
       if go
         puts "\n Generation #{count}"
-        @input = @game_instance.generate(@input)
+        @state = @game_instance.generate(@state)
         @output.print_grid
       end
     end
