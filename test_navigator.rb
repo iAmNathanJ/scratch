@@ -1,5 +1,5 @@
 require 'test/unit'
-require_relative 'navigator'
+require_relative 'surveyor'
 
 class TestGameOfLife < Test::Unit::TestCase
 
@@ -11,7 +11,7 @@ class TestGameOfLife < Test::Unit::TestCase
       { x: 1, y: 0 },
       { x: 0, y: 1 }
     ]
-    @nav = XY_Navigator.new
+    @nav = XY_Surveyor.new
   end
 
   def test_navigator_confirms_location_exists

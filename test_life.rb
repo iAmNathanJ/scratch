@@ -1,6 +1,6 @@
 require 'test/unit'
 require_relative 'game_of_life'
-require_relative 'navigator'
+require_relative 'surveyor'
 require_relative 'rules'
 
 class TestGameOfLife < Test::Unit::TestCase
@@ -8,7 +8,7 @@ class TestGameOfLife < Test::Unit::TestCase
   attr_reader :life
 
   def setup
-    nav = XY_Navigator.new
+    nav = XY_Surveyor.new
     rules = Rules.new
     @life = GameOfLife.new(nav, rules)
   end
